@@ -1,0 +1,35 @@
+version: '3.8'
+
+services: 
+  node_backend:
+    container_name: node_test6
+    image: node_test6:0.0.3
+    build: 
+      context: .
+    ports:
+      - "3001:3001"
+    environment: 
+      - EXTERNAL_PORT=3001
+      - PGDATABASE=sokiyo_db
+      - PGUSER=postgres
+      - PGPASSWORD=password
+      - PGHOST=nodes_db
+    depends_on: 
+      - nodes_db
+  nodes_db: 
+    container_name: nodes_db
+    image: "postgres:12"
+    ports:
+      - "5432:5432"
+    environment: 
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=sokiyo_db
+    volumes:
+      - nps_data:/var/lib/postgresql/data
+
+volumes:
+  nps_data: {}
+
+  
+    
